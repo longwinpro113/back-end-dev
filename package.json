@@ -1,0 +1,23 @@
+{
+  "name": "back-end-dev",
+  "version": "1.0.0",
+  "description": "learn back-end dev",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/longwinpro113/back-end-dev.git"
+  },
+  "author": "longnguyen07",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/longwinpro113/back-end-dev/issues"
+  },
+  "homepage": "https://github.com/longwinpro113/back-end-dev#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
