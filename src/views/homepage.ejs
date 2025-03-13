@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -6,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/css/styles.css" rel="stylesheet" />
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-container">
         <div class="container-fluid">
@@ -15,7 +17,8 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="navbar-links navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px">
+                <ul class="navbar-links navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
+                    style="--bs-scroll-height: 100px">
                     <li class="nav-item">
                         <a class="nav-link active text-light" aria-current="page" href="#">Home</a>
                     </li>
@@ -86,16 +89,20 @@
         <div class="container">
             <h2 class="text-center">Manage Users</h2>
             <div id="message" class="alert" role="alert" style="display: none;"></div>
-            <form id="userForm" class="mb-4">
+            <form id="userForm" class="mb-4" action="/api/users" method="POST">
                 <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" required>
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" required>
+                    <input type="email" class="form-control" id="email" name="email" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Add User</button>
+                <div class="mb-3">
+                    <label for="city" class="form-label">City</label>
+                    <input type="text" class="form-control" id="city" name="city" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
             </form>
             <ul id="userList" class="list-group">
                 <!-- User items will be added here dynamically -->
@@ -111,33 +118,54 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById('userForm').addEventListener('submit', function(event) {
+        document.getElementById('userForm').addEventListener('submit', async function (event) {
             event.preventDefault();
-            const username = document.getElementById('username').value;
-            const email = document.getElementById('email').value;
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
 
-            const userItem = document.createElement('li');
-            userItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-            userItem.innerHTML = `
-                <span>${username} (${email})</span>
-                <button class="btn btn-danger btn-sm" onclick="deleteUser(this)">Delete</button>
-            `;
+            const response = await fetch('/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
 
-            document.getElementById('userList').appendChild(userItem);
+            if (response.ok) {
+                const user = await response.json();
+                const userItem = document.createElement('li');
+                userItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                userItem.innerHTML = `
+                    <span>${user.name} (${user.email}, ${user.city})</span>
+                    <button class="btn btn-danger btn-sm" onclick="deleteUser(this, '${user.id}')">Delete</button>
+                `;
 
-            // Show success message
-            showMessage('User added successfully!', 'success');
+                document.getElementById('userList').appendChild(userItem);
 
-            // Clear the form
-            document.getElementById('userForm').reset();
+                // Show success message
+                showMessage('User added successfully!', 'success');
+
+                // Clear the form
+                document.getElementById('userForm').reset();
+            } else {
+                showMessage('Failed to add user!', 'danger');
+            }
         });
 
-        function deleteUser(button) {
-            const userItem = button.parentElement;
-            document.getElementById('userList').removeChild(userItem);
+        async function deleteUser(button, userId) {
+            const response = await fetch(`/api/users/${userId}`, {
+                method: 'DELETE'
+            });
 
-            // Show delete message
-            showMessage('User deleted successfully!', 'danger');
+            if (response.ok) {
+                const userItem = button.parentElement;
+                document.getElementById('userList').removeChild(userItem);
+
+                // Show delete message
+                showMessage('User deleted successfully!', 'danger');
+            } else {
+                showMessage('Failed to delete user!', 'danger');
+            }
         }
 
         function showMessage(message, type) {
@@ -146,10 +174,9 @@
             messageDiv.textContent = message;
             messageDiv.style.display = 'block';
 
-            setTimeout(() => {
-                messageDiv.style.display = 'none';
-            }, 3000);
+            setTimeout(() => { messageDiv.style.display = 'none'; }, 3000);
         }
     </script>
 </body>
+
 </html>
