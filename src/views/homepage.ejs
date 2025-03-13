@@ -46,6 +46,110 @@
         </div>
     </nav>
 
+    <header class="hero-section text-center text-light">
+        <div class="container">
+            <h1>Welcome to My Website</h1>
+            <p class="lead">We provide the best services for web and app development.</p>
+            <a href="#" class="btn btn-primary btn-lg">Get Started</a>
+        </div>
+    </header>
+
+    <section class="features-section py-5">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <i class="bi bi-laptop feature-icon"></i>
+                        <h3>Web Development</h3>
+                        <p>We build responsive and modern websites.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <i class="bi bi-phone feature-icon"></i>
+                        <h3>App Development</h3>
+                        <p>We create user-friendly mobile applications.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <i class="bi bi-people feature-icon"></i>
+                        <h3>Consulting</h3>
+                        <p>We offer expert consulting services.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="user-management-section py-5">
+        <div class="container">
+            <h2 class="text-center">Manage Users</h2>
+            <div id="message" class="alert" role="alert" style="display: none;"></div>
+            <form id="userForm" class="mb-4">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add User</button>
+            </form>
+            <ul id="userList" class="list-group">
+                <!-- User items will be added here dynamically -->
+            </ul>
+        </div>
+    </section>
+
+    <footer class="footer-section text-center text-light py-4">
+        <div class="container">
+            <p>&copy; 2025 My Website. All rights reserved.</p>
+        </div>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('userForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+
+            const userItem = document.createElement('li');
+            userItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+            userItem.innerHTML = `
+                <span>${username} (${email})</span>
+                <button class="btn btn-danger btn-sm" onclick="deleteUser(this)">Delete</button>
+            `;
+
+            document.getElementById('userList').appendChild(userItem);
+
+            // Show success message
+            showMessage('User added successfully!', 'success');
+
+            // Clear the form
+            document.getElementById('userForm').reset();
+        });
+
+        function deleteUser(button) {
+            const userItem = button.parentElement;
+            document.getElementById('userList').removeChild(userItem);
+
+            // Show delete message
+            showMessage('User deleted successfully!', 'danger');
+        }
+
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.className = `alert alert-${type}`;
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block';
+
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
