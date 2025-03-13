@@ -1,11 +1,14 @@
+const { json } = require('express');
+const connection = require('../config/database')
+
 const getHomePage = (req, res) => {
-    res.send('Hello Long')
+  return res.render('homepage.ejs')
 }
 
 const getProduct = (req, res) => {
-    res.render('sample.ejs')
+  res.render('sample.ejs')
 }
 
 module.exports = {
-    getHomePage, getProduct
+  getHomePage, getProduct
 }

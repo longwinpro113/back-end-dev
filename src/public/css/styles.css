@@ -2,3 +2,110 @@
     width: 500px;
     height: auto;
 }
+
+/* homepage.ejs */
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-container {
+    background: linear-gradient(90deg, #1a1a2e, #16213e);
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-logo {
+    color: #ffffff !important;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 1.5rem;
+    text-decoration: none; /* Ensure no underline or extra characters */
+}
+
+.navbar-links .nav-item {
+    color: #e0e0e0 !important;
+    font-weight: 500;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.navbar-links .nav-link:hover,
+.navbar-links .nav-link.active {
+    color: #ffffff !important;
+    background: linear-gradient(90deg, #1a1a2e, #16213e) !important;
+    border-radius: 5px;
+}
+
+.navbar-toggle {
+    border: none;
+}
+
+.navbar-toggle-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+}
+
+.navbar-collapse {
+    transition: all 0.3s ease;
+}
+
+.dropdown-container {
+    background-color: #1a1a2e;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    min-width: 200px;
+    margin-top: 0;
+}
+
+.dropdown-link {
+    color: #e0e0e0 !important;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.dropdown-link:hover {
+    background-color: #0f3460 !important;
+    color: #ffffff !important;
+}
+
+.dropdown-separator {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.d-flex {
+    align-items: center;
+}
+
+.search-input {
+    border-radius: 20px;
+    border: none;
+    background-color: #16213e;
+    color: #e0e0e0;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.search-input::placeholder {
+    color: #a0a0a0;
+}
+
+.search-input:focus {
+    box-shadow: 0 0 5px rgba(15, 52, 96, 0.5);
+    background-color: #16213e;
+    color: #ffffff;
+}
+
+.search-button {
+    border-radius: 20px;
+    padding: 0.5rem 1.5rem;
+    color: #e0e0e0;
+    border-color: #0f3460;
+    transition: all 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #0f3460;
+    border-color: #0f3460;
+    color: #ffffff;
+}
