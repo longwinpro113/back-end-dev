@@ -1,129 +1,134 @@
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg navbar-container">
         <div class="container-fluid">
-            <a class="navbar-logo text-light" href="#">My Website</a>
+            <a class="navbar-logo text-light" href="/"><i class="fas fa-home"></i> My Website</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                 aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="navbar-links navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
-                    style="--bs-scroll-height: 100px">
+                <ul class="navbar-links navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px">
                     <li class="nav-item">
-                        <a class="nav-link active text-light" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active text-light" aria-current="page" href="/"><i class="fas fa-home"></i> Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="#">About</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-light" href="#" id="servicesDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Services
-                        </a>
-                        <ul class="dropdown-container dropdown-menu bg-dark" aria-labelledby="servicesDropdown">
-                            <li><a class="dropdown-link dropdown-item text-light" href="#">Web Development</a></li>
-                            <li><a class="dropdown-link dropdown-item text-light" href="#">App Development</a></li>
-                            <li>
-                                <hr class="dropdown-separator dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-link dropdown-item text-light" href="#">Consulting</a></li>
-                        </ul>
+                        <a class="nav-link text-light" href="/about"><i class="fas fa-info-circle"></i> About</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="search-input form-control me-2 text-light bg-dark" type="search" placeholder="Search"
-                        aria-label="Search">
-                    <button class="search-button btn btn-outline-light" type="submit">Search</button>
-                </form>
+                <div class="d-flex">
+                    <button type="button" id="viewAllUsers" class="btn btn-secondary me-2"><i class="fas fa-users"></i> View All Users</button>
+                    <button type="button" id="deleteSelectedUsers" class="btn btn-danger me-2"><i class="fas fa-trash-alt"></i> Delete Users</button>
+                    <button type="button" id="addUserButton" class="btn btn-primary"><i class="fas fa-user-plus"></i> Add User</button>
+                </div>
             </div>
         </div>
     </nav>
-
-    <header class="hero-section text-center text-light">
+    
+    <section class="user-management-section py-5">
         <div class="container">
-            <h1>Welcome to My Website</h1>
-            <p class="lead">We provide the best services for web and app development.</p>
-            <a href="#" class="btn btn-primary btn-lg">Get Started</a>
-        </div>
-    </header>
-
-    <section class="features-section py-5">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <div class="feature-box">
-                        <i class="bi bi-laptop feature-icon"></i>
-                        <h3>Web Development</h3>
-                        <p>We build responsive and modern websites.</p>
+            <h2 class="text-center mb-4">Manage Users</h2>
+            <div id="message" class="alert" role="alert" style="display: none;"></div>
+            <form id="userForm" class="mb-4">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="city" class="form-label">City <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="city" name="city" required>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="feature-box">
-                        <i class="bi bi-phone feature-icon"></i>
-                        <h3>App Development</h3>
-                        <p>We create user-friendly mobile applications.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-box">
-                        <i class="bi bi-people feature-icon"></i>
-                        <h3>Consulting</h3>
-                        <p>We offer expert consulting services.</p>
-                    </div>
-                </div>
+            </form>
+            <div id="userTable" class="mt-4" style="display: none;">
+                <h3 class="text-center">All Users</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>City</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <!-- User data will be inserted here dynamically -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
 
-    <section class="user-management-section py-5">
-        <div class="container">
-            <h2 class="text-center">Manage Users</h2>
-            <div id="message" class="alert" role="alert" style="display: none;"></div>
-            <form id="userForm" class="mb-4" action="/api/users" method="POST">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+    <div id="confirmationModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete the selected users?</p>
                 </div>
-                <div class="mb-3">
-                    <label for="city" class="form-label">City</label>
-                    <input type="text" class="form-control" id="city" name="city" required>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
                 </div>
-                <button type="submit" class="btn btn-primary">Save</button>
-            </form>
-            <ul id="userList" class="list-group">
-                <!-- User items will be added here dynamically -->
-            </ul>
+            </div>
         </div>
-    </section>
-
-    <footer class="footer-section text-center text-light py-4">
-        <div class="container">
-            <p>&copy; 2025 My Website. All rights reserved.</p>
-        </div>
-    </footer>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById('userForm').addEventListener('submit', async function (event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
+        async function fetchAndDisplayUsers() {
+            const response = await fetch('/api/users');
+            if (response.ok) {
+                const users = await response.json();
+                const userTableBody = document.getElementById('userTableBody');
+                userTableBody.innerHTML = '';
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.classList.add('fade-in');
+                    row.innerHTML = `
+                        <td><input type="checkbox" class="user-checkbox" data-id="${user.id}"></td>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.city}</td>
+                    `;
+                    userTableBody.appendChild(row);
+                });
+                document.getElementById('userTable').style.display = 'block';
+            } else {
+                showMessage('Failed to fetch users', 'danger');
+            }
+        }
+
+        document.getElementById('viewAllUsers').addEventListener('click', fetchAndDisplayUsers);
+
+        document.getElementById('addUserButton').addEventListener('click', async function() {
+            const form = document.getElementById('userForm');
+            const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
-            const response = await fetch('/api/users', {
+            // Validate form data
+            if (!data.name || !data.email || !data.city) {
+                showMessage('All fields are required', 'warning');
+                return;
+            }
+
+            const response = await fetch('/create-user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -132,51 +137,70 @@
             });
 
             if (response.ok) {
-                const user = await response.json();
-                const userItem = document.createElement('li');
-                userItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-                userItem.innerHTML = `
-                    <span>${user.name} (${user.email}, ${user.city})</span>
-                    <button class="btn btn-danger btn-sm" onclick="deleteUser(this, '${user.id}')">Delete</button>
-                `;
-
-                document.getElementById('userList').appendChild(userItem);
-
-                // Show success message
-                showMessage('User added successfully!', 'success');
-
-                // Clear the form
-                document.getElementById('userForm').reset();
+                showMessage('User added successfully', 'success');
+                form.reset();
+                fetchAndDisplayUsers(); // Refresh the user list
             } else {
-                showMessage('Failed to add user!', 'danger');
+                showMessage('Failed to add user', 'danger');
             }
         });
 
-        async function deleteUser(button, userId) {
-            const response = await fetch(`/api/users/${userId}`, {
-                method: 'DELETE'
+        document.getElementById('deleteSelectedUsers').addEventListener('click', function() {
+            const selectedUsers = document.querySelectorAll('.user-checkbox:checked');
+            if (selectedUsers.length > 0) {
+                const modal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+                modal.show();
+            } else {
+                showMessage('No users selected', 'warning');
+            }
+        });
+
+        document.getElementById('confirmDelete').addEventListener('click', async function() {
+            const selectedUsers = document.querySelectorAll('.user-checkbox:checked');
+            const ids = Array.from(selectedUsers).map(checkbox => checkbox.getAttribute('data-id'));
+
+            const response = await fetch('/api/users', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ids })
             });
 
             if (response.ok) {
-                const userItem = button.parentElement;
-                document.getElementById('userList').removeChild(userItem);
-
-                // Show delete message
-                showMessage('User deleted successfully!', 'danger');
+                showMessage('Users deleted successfully', 'success');
+                fetchAndDisplayUsers(); // Refresh the user list
             } else {
-                showMessage('Failed to delete user!', 'danger');
+                showMessage('Failed to delete users', 'danger');
             }
-        }
+
+            const modal = bootstrap.Modal.getInstance(document.getElementById('confirmationModal'));
+            modal.hide();
+        });
 
         function showMessage(message, type) {
             const messageDiv = document.getElementById('message');
-            messageDiv.className = `alert alert-${type}`;
+            messageDiv.className = `alert alert-${type} fade-in`;
             messageDiv.textContent = message;
             messageDiv.style.display = 'block';
 
-            setTimeout(() => { messageDiv.style.display = 'none'; }, 3000);
+            setTimeout(() => {
+                messageDiv.classList.add('fade-out');
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                    messageDiv.classList.remove('fade-out');
+                }, 1000);
+            }, 3000);
         }
+
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar-container');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
     </script>
 </body>
-
 </html>

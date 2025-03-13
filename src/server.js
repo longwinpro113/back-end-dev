@@ -2,17 +2,19 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const configViewEngine = require("./config/viewEngine");
-const mysql = require("mysql2");
 const webRoutes = require("./routes/web");
-const connection = require("./config/database");
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-//? config template engine
+// Middleware to parse JSON and URL-encoded data
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Config template engine
 configViewEngine(app);
 
-//? Routes Declaration
+// Routes Declaration
 app.use("/", webRoutes);
 
-app.listen(port);
+app.listen(process.env.PORT)

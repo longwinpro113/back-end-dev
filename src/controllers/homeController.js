@@ -1,18 +1,7 @@
 const { json } = require('express');
-const connection = require('../config/database')
+const pool = require('../config/database');
 const mysql = require('mysql2');
 require('dotenv').config();
-
-// Create a connection pool to the database
-const pool = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
-});
 
 const getHomePage = (req, res) => {
     pool.getConnection((err, connection) => {
@@ -21,7 +10,6 @@ const getHomePage = (req, res) => {
             res.status(500).send('Error connecting to the database');
             return;
         }
-        console.log('Connected to the MySQL database.');
         connection.release();
         return res.render('homepage.ejs');
     });
@@ -31,7 +19,53 @@ const getProduct = (req, res) => {
     res.render('sample.ejs');
 };
 
+const getAboutPage = (req, res) => {
+    res.render('about.ejs');
+};
+
+const createUser = (req, res) => {
+    const { name, email, city } = req.body;
+    const query = 'INSERT INTO users (name, email, city) VALUES (?, ?, ?)';
+    pool.query(query, [name, email, city], (err, result) => {
+        if (err) {
+            console.error('Error inserting user:', err);
+            res.status(500).send('Failed to add user');
+            return;
+        }
+        res.status(201).send('User added successfully');
+    });
+};
+
+const getAllUsers = (req, res) => {
+    const query = 'SELECT id, name, email, city FROM users';
+    pool.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching users:', err);
+            res.status(500).send('Failed to fetch users');
+            return;
+        }
+        res.status(200).json(results);
+    });
+};
+
+const deleteUsers = (req, res) => {
+    const { ids } = req.body;
+    const query = 'DELETE FROM users WHERE id IN (?)';
+    pool.query(query, [ids], (err, result) => {
+        if (err) {
+            console.error('Error deleting users:', err);
+            res.status(500).send('Failed to delete users');
+            return;
+        }
+        res.status(200).send('Users deleted successfully');
+    });
+};
+
 module.exports = {
     getHomePage,
-    getProduct
+    getProduct,
+    getAboutPage,
+    createUser,
+    getAllUsers,
+    deleteUsers
 };

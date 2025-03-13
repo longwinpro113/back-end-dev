@@ -8,12 +8,19 @@ body {
     font-family: "Segoe UI", Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+    transition: background 0.5s ease-in-out;
 }
 
 .navbar-container {
     background: linear-gradient(90deg, #1a1a2e, #16213e);
     padding: 1rem 0;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: background 0.5s ease-in-out;
+}
+
+.navbar-container.scrolled {
+    background: linear-gradient(90deg, #16213e, #1a1a2e);
 }
 
 .navbar-logo {
@@ -36,13 +43,14 @@ body {
     color: #ffffff !important;
     background: linear-gradient(90deg, #1a1a2e, #16213e) !important;
     border-radius: 5px;
+    transform: scale(1.1);
 }
 
-.navbar-toggle {
+.navbar-toggler {
     border: none;
 }
 
-.navbar-toggle-icon {
+.navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
 }
 
@@ -67,6 +75,7 @@ body {
 .dropdown-link:hover {
     background-color: #0f3460 !important;
     color: #ffffff !important;
+    transform: scale(1.1);
 }
 
 .dropdown-separator {
@@ -170,9 +179,14 @@ body {
     border-color: #0056b3;
 }
 
-.user-management-section .list-group-item {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
+.user-management-section .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.user-management-section .btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
 }
 
 .user-management-section .btn-danger {
@@ -183,4 +197,55 @@ body {
 .user-management-section .btn-danger:hover {
     background-color: #c82333;
     border-color: #bd2130;
+}
+
+.user-management-section .table {
+    margin-top: 20px;
+}
+
+.user-management-section .list-group-item {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+}
+
+.fade-in {
+    animation: fadeIn 1s ease-in-out;
+}
+
+.fade-out {
+    animation: fadeOut 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.about-section {
+    background-color: #ffffff;
+    padding: 50px 0;
+}
+
+.about-section h2 {
+    margin-bottom: 30px;
+}
+
+.about-section p {
+    font-size: 1.2rem;
+    color: #333333;
 }
